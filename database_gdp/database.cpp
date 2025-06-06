@@ -36,7 +36,7 @@ int main() {
         state = word; //state is set to the first word
         file >> word; //move onto next word
 
-        if(word[0] != '$'){ //If the next word doesn't start with $, its still apart of the state name
+        if(isdigit(word[0]) == false){ //If the next word doesn't start with a digit, its still apart of the state name
             state += " " + word;
             file >> word;
         }
@@ -45,11 +45,11 @@ int main() {
         file >> stem >> urban >> adj >> disp >> value; //go through the rest of the words and store 
 
         StateData d; //Initialize a structure
-        d.gdp_per_worker = stod(clean(gdp)); 
-        d.workforce_in_stem = stod(clean(stem));
-        d.urbanization_rate = stod(clean(urban));               
-        d.adjusted_disposable_income = stod(clean(adj));
-        d.disposable_income = stod(clean(disp));
+        d.gdp_per_worker = stod(gdp); 
+        d.workforce_in_stem = stod(clean(stem)); //remove the percent signs
+        d.urbanization_rate = stod(urban);               
+        d.adjusted_disposable_income = stod(adj);
+        d.disposable_income = stod(disp);
         d.true_value_USD = stod(value);
 
         gdp_database[state] = d; //save to state key
