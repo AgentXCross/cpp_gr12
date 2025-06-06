@@ -1,8 +1,9 @@
-#Heading1 ICS4U C++ CULMINATING
+#ICS4U C++ CULMINATING
 
-Michael Liu's ICS4U Grade 12 Computer Science Culminating Project.
-Learn a new coding language and complete multiple tasks in that language (C++).
+###**Michael Liu** ICS4U Grade 12 Computer Science Culminating Project.
+####Learn a new coding language and complete multiple tasks in that language (C++).
 
+#####Tasks:
 1. Hello,World
 2. Fizz-Buzz (n = 50)
 3. Create a database (inventory => name of item and quantity)
