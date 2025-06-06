@@ -3,6 +3,11 @@
 #include <limits>
 using namespace std;
 
+/*
+Another way to concatenate strings without += is using +
+Ex: string combined = string_1 + string_2
+*/
+
 int main() {
     string output; 
     bool more = true; //If user wants to continue to enter values
