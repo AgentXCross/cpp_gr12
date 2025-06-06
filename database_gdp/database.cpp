@@ -24,7 +24,7 @@ string clean(string input) { //Cleaning function for data in the .txt file
         }
     }
     return cleaned_string;
-};
+}
 
 int main() {
     ifstream file("merged_gdp_data.txt"); //opens the file for reading
@@ -39,7 +39,7 @@ int main() {
         if(word[0] != '$'){ //If the next word doesn't start with $, its still apart of the state name
             state += " " + word;
             file >> word;
-        };
+        }
 
         gdp = word;
         file >> stem >> urban >> adj >> disp >> value; //go through the rest of the words and store 
@@ -62,18 +62,19 @@ int main() {
 
         if(input == "Exit" || input == "exit") {
             break; //end the loop
-        };
+        }
 
         if (gdp_database.count(input)){
             StateData d = gdp_database[input];
             cout << "\nGDP Per Worker: $" << d.gdp_per_worker << endl;
-            cout << "\% STEM Workforce: " << d.workforce_in_stem << "%" << endl;
-            cout << "\% Urbanization Rate: " << d.urbanization_rate << "%" << endl;
+            cout << "% STEM Workforce: " << d.workforce_in_stem << "%" << endl;
+            cout << "% Urbanization Rate: " << d.urbanization_rate << "%" << endl;
             cout << "True Value Adjusted Disposable Income: $" << d.adjusted_disposable_income << endl;
             cout << "Average Disposable Income: $" << d.disposable_income << endl;
             cout << "True value of $1 USD: " << d.true_value_USD << endl;
         } else {
             cout << "State not found. Please check your spelling." << endl;
-        };
+        }
     };
+    return 0;
 };   
