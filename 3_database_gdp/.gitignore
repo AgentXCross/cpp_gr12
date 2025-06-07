@@ -1,1 +1,4 @@
 database
+merged_gdp_data.csv
+merged_gdp_data.txt
+.gitignore
