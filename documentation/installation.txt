@@ -1,0 +1,19 @@
+C++ Installation for MacOS
+
+Requires a text-editor/IDE like Visual Studio Code
+
+In terminal:
+xcode-select --install
+A popup will appear, click install. This downloads clang++, the C++ compiler.
+
+clang++ --version 
+This will check to make sure the installation was succesful.
+
+Install VSCode and go to extensions. Download the C++ extension made by Microsoft. 
+Create a file using the file extension .cpp
+
+To compile and run code, open terminal and type:
+clang++ file_name.cpp -o file_name
+And then:
+./file_name
+

@@ -1,0 +1,11 @@
+1. Was there a parent language?
+Yes, the parent language of C++ is C. C was developed in the early 1970s by Dennis Ritchie.
+C++ was created by Bjarne Stroustrup in the early 1980s. It was originally called "C with classes".
+It still maintains compatibility with most C code.
+
+2. Was there a specific problem it was trying to solve?
+Yes, C++ was created to add object-oriented programming (OOP) features to C.
+C didn't have classes and inheritance (classes inheriting from other classes). 
+Bjarne Stroustrup wanted the fast performance and low-level control of C with organization offered by OOP. 
+He was first inspired by Simula, the first OOP language that had good design but low efficiency.
+The overall goal was to make it easier to manage complex software systems while maintaining efficiency.
