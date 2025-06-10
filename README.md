@@ -35,3 +35,4 @@ ICS4U Grade 12 Computer Science Culminating Project.
    - Allow user to convert temperature between Kelvin (K), Celsius (C), and Fahrenheit (F)
 
 7. **Object-Oriented Programming**
+   - Snake Game made in C++ using RayLib
