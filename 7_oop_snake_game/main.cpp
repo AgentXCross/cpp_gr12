@@ -10,6 +10,7 @@ Color dark_green = {43, 51, 24, 255}; //GUI Colors
 
 int cell_size = 30;
 int cell_count = 25; //Used to create an invisible grid
+int offset = 75; //Extra border
 
 double last_update_time = 0; //Keep track of time after last snake movement
 
@@ -41,7 +42,7 @@ class Snake { //The snake will be represented as a deque, where elements can be 
             for(unsigned int i = 0; i < body.size(); i++) {
                 float x = body[i].x;
                 float y = body[i].y;
-                Rectangle segment = Rectangle(x * cell_size, y * cell_size, (float)cell_size, (float)cell_size);
+                Rectangle segment = Rectangle(offset + x * cell_size, offset + y * cell_size, (float)cell_size, (float)cell_size);
                 DrawRectangleRounded(segment, 0.5, 6, dark_green);
             }
         }
@@ -79,7 +80,7 @@ class Food { //Class to represent the snake food
 
     void Draw() {
         //DrawTexture(texture, position.x * cell_size, position.y * cell_size, WHITE); Tutorial version
-        Vector2 position_pixels = {position.x * cell_size, position.y * cell_size};
+        Vector2 position_pixels = {offset + position.x * cell_size, offset + position.y * cell_size};
         float scale = (float)cell_size / texture.width; // Assumes square image
         DrawTextureEx(texture, position_pixels, 0.0f, scale, WHITE);
     }
@@ -104,6 +105,7 @@ class Game {
         Snake snake = Snake();
         Food food = Food(snake.body);
         bool running = true;
+        int score = 0;
 
         void Draw() {
             food.Draw();
@@ -123,6 +125,7 @@ class Game {
             if(Vector2Equals(snake.body[0], food.position)) {
                 food.position = food.generate_random_pos(snake.body);
                 snake.add_segment = true;
+                score++;
             }
         }
 
@@ -139,6 +142,7 @@ class Game {
             snake.Reset();
             food.position = food.generate_random_pos(snake.body);
             running = false;
+            score = 0;
         }
 
         void check_collision_with_tail() { //Check if the head hits any of the body vectors
@@ -153,7 +157,7 @@ class Game {
 int main() {
 
     cout << "Starting the game ... " << endl;
-    InitWindow(cell_size * cell_count, cell_size * cell_count, "RETRO SNAKE"); //750 by 750 pixels. The origin (0,0) is at the top left.
+    InitWindow(2 * offset + cell_size * cell_count, 2 * offset + cell_size * cell_count, "RETRO SNAKE"); //750 by 750 pixels. The origin (0,0) is at the top left. Margins are created using offset
     SetTargetFPS(60); //60 Frames per second
 
     Game game = Game();
@@ -189,6 +193,9 @@ int main() {
 
         //Drawing
         ClearBackground(green);
+        DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset - 5, (float)cell_size * cell_count + 10, (float)cell_size * cell_count + 10}, 5, dark_green);
+        DrawText("RETRO SNAKE", offset - 5, 20, 40, dark_green);
+        DrawText(TextFormat("%i", game.score), offset - 5, offset + cell_count * cell_size + 10, 40, dark_green);
         game.Draw();
 
         EndDrawing();
