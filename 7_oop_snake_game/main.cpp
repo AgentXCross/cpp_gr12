@@ -35,6 +35,7 @@ class Snake { //The snake will be represented as a deque, where elements can be 
     public:
         deque<Vector2> body = {Vector2{6,9}, Vector2{5,9}, Vector2{4,9}};
         Vector2 direction = {1, 0};
+        bool add_segment = false;
 
         void Draw() { //Draw the snake using rounded rectangles
             for(unsigned int i = 0; i < body.size(); i++) {
@@ -46,8 +47,12 @@ class Snake { //The snake will be represented as a deque, where elements can be 
         }
 
         void Update() { //update grid placements as the snake moves in a direction by adding vectors
-            body.pop_back(); //remove back of snake
-            body.push_front(Vector2Add(body[0], direction)); //Add one piece to snake in current facing direction
+            body.push_front(Vector2Add(body[0], direction)); //Add one piece to snake in current facing direction   
+            if(add_segment == true) {
+                add_segment = false;
+            } else {
+                body.pop_back(); //remove back of snake
+            }
         }
 };
 
@@ -107,6 +112,7 @@ class Game {
         void check_collision_with_food() { //A collision occurs when the head of the snake is on the food grid vector
             if(Vector2Equals(snake.body[0], food.position)) {
                 food.position = food.generate_random_pos(snake.body);
+                snake.add_segment = true;
             }
         }
 };
