@@ -13,6 +13,15 @@ int cell_count = 25; //Used to create an invisible grid
 
 double last_update_time = 0; //Keep track of time after last snake movement
 
+bool element_in_deque(Vector2 element, deque<Vector2> deque) { //Ensure the food/apple doesn't spawn on grid spots already occupied by the snake
+    for(unsigned int i = 0; i < deque.size(); i++) {
+        if(Vector2Equals(deque[i], element)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool event_triggered(double interval) { //Used to slow the movement of the snake
     double current_time = GetTime();
     if(current_time - last_update_time >= interval) {
@@ -47,11 +56,11 @@ class Food { //Class to represent the snake food
         Vector2 position; //position.x, position.y
         Texture2D texture;
     
-        Food() { //Constructor function to load apple image
+        Food(deque<Vector2> snake_body) { //Constructor function to load apple image
             Image image = LoadImage("food.png"); //path to image
             texture = LoadTextureFromImage(image); //Store pixel data
             UnloadImage(image);
-            position = generate_random_pos();
+            position = generate_random_pos(snake_body);
         }
 
         ~Food() { //Destructor function
@@ -65,17 +74,25 @@ class Food { //Class to represent the snake food
         DrawTextureEx(texture, position_pixels, 0.0f, scale, WHITE);
     }
 
-    Vector2 generate_random_pos() {
+    Vector2 generate_random_cell() {
         float x = GetRandomValue(0, cell_count - 1);
         float y = GetRandomValue(0, cell_count - 1);
-        return Vector2(x, y);
+        return Vector2{x, y};
+    }
+
+    Vector2 generate_random_pos(deque<Vector2> snake_body) {
+        Vector2 postion = generate_random_cell();
+        while(element_in_deque(position, snake_body)) {//Ensure new spawns not on the snake
+            position = generate_random_cell();
+        }
+        return position;
     }
 };
 
 class Game {
     public:
         Snake snake = Snake();
-        Food food = Food();
+        Food food = Food(snake.body);
 
         void Draw() {
             food.Draw();
@@ -84,6 +101,13 @@ class Game {
 
         void Update() {
             snake.Update();
+            check_collision_with_food();
+        }
+
+        void check_collision_with_food() { //A collision occurs when the head of the snake is on the food grid vector
+            if(Vector2Equals(snake.body[0], food.position)) {
+                food.position = food.generate_random_pos(snake.body);
+            }
         }
 };
 
