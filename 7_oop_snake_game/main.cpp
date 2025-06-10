@@ -54,6 +54,11 @@ class Snake { //The snake will be represented as a deque, where elements can be 
                 body.pop_back(); //remove back of snake
             }
         }
+
+        void Reset() { //Reset position if game over
+            body = {Vector2{6,9}, Vector2{5,9}, Vector2{4,9}};
+            direction = {1, 0};
+        }
 };
 
 class Food { //Class to represent the snake food
@@ -98,6 +103,7 @@ class Game {
     public:
         Snake snake = Snake();
         Food food = Food(snake.body);
+        bool running = true;
 
         void Draw() {
             food.Draw();
@@ -105,14 +111,41 @@ class Game {
         }
 
         void Update() {
-            snake.Update();
-            check_collision_with_food();
+            if(running){
+                snake.Update();
+                check_collision_with_food();
+                check_collision_with_edges();
+                check_collision_with_tail();
+            }
         }
 
         void check_collision_with_food() { //A collision occurs when the head of the snake is on the food grid vector
             if(Vector2Equals(snake.body[0], food.position)) {
                 food.position = food.generate_random_pos(snake.body);
                 snake.add_segment = true;
+            }
+        }
+
+        void check_collision_with_edges() {
+            if(snake.body[0].x == cell_count || snake.body[0].x == -1) {
+                game_over(); //End game if the snake moves out
+            }
+            if(snake.body[0].y == cell_count || snake.body[0].y == -1) {
+                game_over();
+            }
+        }
+
+        void game_over() { //End game
+            snake.Reset();
+            food.position = food.generate_random_pos(snake.body);
+            running = false;
+        }
+
+        void check_collision_with_tail() { //Check if the head hits any of the body vectors
+            deque<Vector2> headless_body = snake.body;
+            headless_body.pop_front();
+            if(element_in_deque(snake.body[0], headless_body)) {
+                game_over();
             }
         }
 };
@@ -136,18 +169,22 @@ int main() {
         //Key pressing functions to change direction while also ensuring the player cannot 180
         if(IsKeyPressed(KEY_UP) && game.snake.direction.y != 1) { 
             game.snake.direction = {0, -1};
+            game.running = true;
         }
         
         if(IsKeyPressed(KEY_DOWN) && game.snake.direction.y != -1) { 
             game.snake.direction = {0, 1};
+            game.running = true;
         }
 
         if(IsKeyPressed(KEY_LEFT) && game.snake.direction.x != 1) { 
             game.snake.direction = {-1, 0};
+            game.running = true;
         }
 
         if(IsKeyPressed(KEY_RIGHT) && game.snake.direction.x != -1) { 
             game.snake.direction = {1, 0};
+            game.running = true;
         }
 
         //Drawing
