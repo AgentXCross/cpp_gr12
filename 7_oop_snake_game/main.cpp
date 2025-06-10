@@ -8,7 +8,7 @@ using namespace std;
 Color green = {173, 204, 96, 255};
 Color dark_green = {43, 51, 24, 255}; //GUI Colors
 
-int cell_size = 30;
+int cell_size = 24;
 int cell_count = 25; //Used to create an invisible grid
 int offset = 75; //Extra border
 
