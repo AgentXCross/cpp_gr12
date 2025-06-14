@@ -1,11 +1,13 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 int main() {
     cout << "Enter the number of Pascal Triangle rows--> " << endl;
     int rows;
     cin >> rows;
-    int triangle[100][100] = {0}; //Fill with all 0's, don't print the 0's later
+    time_t start_time = time(NULL); //Start the timer
+    static int triangle[2000][2000] = {0}; //Fill with all 0's, don't print the 0's later
 
     for(int i = 0; i < rows + 1; i++) {
         triangle[i][0] = 1; //First element 1
@@ -24,5 +26,7 @@ int main() {
         }
         cout << "\n";
     }
+    time_t end_time = time(NULL);
+    cout << "\nTime taken: " << end_time - start_time << " seconds" << endl;
     return 0;
 }
