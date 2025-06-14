@@ -36,3 +36,6 @@ ICS4U Grade 12 Computer Science Culminating Project.
 
 7. **Object-Oriented Programming**
    - Snake Game made in C++ using RayLib
+
+8. **In Class Coding Task**
+   - Generate Pascal's Triangle
